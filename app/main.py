@@ -1,14 +1,11 @@
 import time
 
-from app.batch.batch_dispatcher import send_batch
+from app.batch.phone_dispatcher import send_interactions
 
 
 def run():
     while True:
-        send_batch(
-            endpoint="http://localhost:5000/api/phone_tracker",
-            batch_size=3
-        )
+        send_interactions(endpoint="http://localhost:5000/api/phone_tracker")
         time.sleep(2)
 
 if __name__ == '__main__':

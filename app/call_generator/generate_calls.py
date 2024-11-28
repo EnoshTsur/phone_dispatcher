@@ -3,29 +3,29 @@ import random
 
 fake = Faker()
 
-devices_id = [fake.uuid4() for _ in range(0, 30)]
+# Generate random device data
+def generate_device():
+    return {
+        "id": fake.uuid4(),
+        "name": fake.first_name(),
+        "brand": fake.company(),
+        "model": fake.word().capitalize() + " " + fake.word().capitalize(),
+        "os": fake.word().capitalize() + "OS " + f"{random.randint(1, 15)}.{random.randint(0, 9)}",
+        "location": {
+            "latitude": float(fake.latitude()),
+            "longitude": float(fake.longitude()),
+            "altitude_meters": random.randint(0, 5000),
+            "accuracy_meters": random.randint(1, 50)
+        }
+    }
+
+devices = [generate_device() for _ in range(0, 30)]
+
 
 def generate_device_interaction():
-
-    # Generate random device data
-    def generate_device():
-        return {
-            "id": random.choice(devices_id),
-            "brand": fake.company(),
-            "model": fake.word().capitalize() + " " + fake.word().capitalize(),
-            "os": fake.word().capitalize() + "OS " + f"{random.randint(1, 15)}.{random.randint(0, 9)}",
-            "location": {
-                "latitude": float(fake.latitude()),
-                "longitude": float(fake.longitude()),
-                "altitude_meters": random.randint(0, 5000),
-                "accuracy_meters": random.randint(1, 50)
-            }
-        }
-
-    # Create two devices
-    device_1 = generate_device()
-    device_2 = generate_device()
-
+    random_devices = random.sample(devices, 2)
+    device_1 = random_devices[0]
+    device_2 = random_devices[1]
     # Generate random interaction data
     interaction = {
         "from_device": device_1["id"],
@@ -45,9 +45,3 @@ def generate_device_interaction():
     }
 
     return data
-
-# Generate a random JSON structure
-random_data = generate_device_interaction()
-
-# Pretty print the JSON
-print(random_data)
