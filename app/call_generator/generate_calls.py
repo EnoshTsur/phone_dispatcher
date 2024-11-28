@@ -1,13 +1,16 @@
 from faker import Faker
 import random
 
+fake = Faker()
+
+devices_id = [fake.uuid4() for _ in range(0, 30)]
+
 def generate_device_interaction():
-    fake = Faker()
 
     # Generate random device data
     def generate_device():
         return {
-            "id": fake.uuid4(),
+            "id": random.choice(devices_id),
             "brand": fake.company(),
             "model": fake.word().capitalize() + " " + fake.word().capitalize(),
             "os": fake.word().capitalize() + "OS " + f"{random.randint(1, 15)}.{random.randint(0, 9)}",
